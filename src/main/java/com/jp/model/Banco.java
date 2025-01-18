@@ -5,11 +5,19 @@ import java.util.List;
 
 public class Banco {
     private List<Usuario> usuarios;
-    private List<Conta> contas;
+    private List<Agencia> agencias;
 
     public Banco() {
+        this.agencias = new ArrayList<>();
         this.usuarios = new ArrayList<>();
-        this.contas = new ArrayList<>();
+    }
+
+    public List<Agencia> getAgencias() {
+        return agencias;
+    }
+
+    public void setAgencias(List<Agencia> agencias) {
+        this.agencias = agencias;
     }
 
     public List<Usuario> getUsuarios() {
@@ -18,13 +26,5 @@ public class Banco {
 
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
-    }
-
-    public List<Conta> getContas() {
-        return contas;
-    }
-
-    public void setContas(List<Conta> contas) {
-        this.contas = contas;
     }
 }

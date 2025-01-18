@@ -2,10 +2,7 @@ package com.jp;
 
 import com.jp.controller.ContaController;
 import com.jp.controller.UsuarioController;
-import com.jp.model.Banco;
-import com.jp.model.Conta;
-import com.jp.model.Tipo;
-import com.jp.model.Usuario;
+import com.jp.model.*;
 
 import java.util.Scanner;
 
@@ -16,8 +13,10 @@ public class Main {
         final UsuarioController usuarioController = new UsuarioController();
         final ContaController contaController = new ContaController();
         Banco bancoAtual = new Banco();
-        Tipo corrente = new Tipo("Conta Corrente");
-        Tipo poupanca = new Tipo("Conta Poupança");
+        Agencia agencia1 = new Agencia(1);
+        Agencia agencia2 = new Agencia(2);
+        bancoAtual.getAgencias().add(agencia1);
+        bancoAtual.getAgencias().add(agencia2);
         int entrada1, entrada2;
 
         while (true) {
@@ -80,20 +79,60 @@ public class Main {
                 sc.nextLine();
                 if (entrada2 == 1) {
                     System.out.println("--------Banco João Pedro de França Barboza----------");
+                    System.out.println("|                Em qual agência?                   |");
+                    System.out.println("|                 1 - Agência 1                     |");
+                    System.out.println("|                 2 - Agência 2                     |");
+                    System.out.println("----------------------------------------------------");
+                    int entradaAgencia = sc.nextInt();
+                    Agencia agenciaAtual = null;
+                    if(entradaAgencia == 1) {
+                        agenciaAtual = agencia1;
+                    } else if (entradaAgencia == 2) {
+                        agenciaAtual = agencia2;
+                    } else {
+                        System.out.println("Agência não existente.");
+                        break;
+                    }
+                    System.out.println("--------Banco João Pedro de França Barboza----------");
                     System.out.println("|                  Abrir conta                      |");
                     System.out.println("|              Qual o tipo da conta?                |");
                     System.out.println("|                 1 - Corrente                      |");
                     System.out.println("|                 2 - Poupanca                      |");
+                    System.out.println("|                 3 - Salário                       |");
                     System.out.println("----------------------------------------------------");
                     int entradaConta = sc.nextInt();
                     sc.nextLine();
-                    Tipo tipoConta;
+                    Conta contaNova = null;
                     if (entradaConta == 1) {
-                        tipoConta = corrente;
+                        contaNova = contaController.cadastroCorrente(usuarioLogado, agenciaAtual);
+                    } else if(entradaConta == 2) {
+                        contaNova = contaController.cadastroPoupanca(usuarioLogado, agenciaAtual);
                     } else {
-                        tipoConta = poupanca;
+                        System.out.println("--------Banco João Pedro de França Barboza----------");
+                        System.out.println("|               Conta do Empregador                 |");
+                        System.out.println("|    Digite o número da conta do seu empregador     |");
+                        System.out.println("----------------------------------------------------");
+                        int entradaContaEmp = sc.nextInt();
+                        sc.nextLine();
+                        System.out.println("--------Banco João Pedro de França Barboza----------");
+                        System.out.println("|             Agência do Empregador                 |");
+                        System.out.println("|    Digite o número da agência do seu empregador   |");
+                        System.out.println("----------------------------------------------------");
+                        int entradaAgenciaEmp = sc.nextInt();
+                        sc.nextLine();
+                        Agencia agenciaEmp = null;
+                        if(entradaAgenciaEmp == 1) {
+                            agenciaEmp = agencia1;
+                        } else if (entradaAgenciaEmp == 2) {
+                            agenciaEmp = agencia2;
+                        } else {
+                            System.out.println("Agência não existente.");
+                        }
+                        if(agenciaEmp != null) {
+                            Conta contaEmp = contaController.acharContaPeloNumero(entradaContaEmp, agenciaEmp);
+                            contaNova = contaController.cadastroSalario(usuarioLogado, agenciaAtual, contaEmp);
+                        }
                     }
-                    Conta contaNova = contaController.cadastro(usuarioLogado, tipoConta, bancoAtual);
                     if (contaNova != null) {
                         System.out.println("Conta cadastrada. Número da conta: " + contaNova.getNumeroDaConta());
                     } else {
@@ -159,7 +198,17 @@ public class Main {
                     System.out.println("Qual o valor?");
                     double valor = sc.nextDouble();
                     sc.nextLine();
-                    Conta contaAReceber = contaController.acharContaPeloNumero(contaAReceberTransferencia, bancoAtual);
+                    System.out.println("Qual a Agência?");
+                    int numAgencia = sc.nextInt();
+                    Agencia agenciaAtual = null;
+                    if(numAgencia == 1) {
+                        agenciaAtual = agencia1;
+                    } else if (numAgencia == 2) {
+                        agenciaAtual = agencia2;
+                    } else {
+                        System.out.println("Agência não existente.");
+                    }
+                    Conta contaAReceber = contaController.acharContaPeloNumero(contaAReceberTransferencia, agenciaAtual);
                     if (contaQueVaiPagar != null && contaAReceber != null) {
                         contaController.transferencia(contaQueVaiPagar, contaAReceber, valor, usuarioLogado);
                     } else {

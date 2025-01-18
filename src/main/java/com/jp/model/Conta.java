@@ -1,11 +1,8 @@
 package com.jp.model;
 
-import java.util.Random;
-
 public class Conta {
     private int numeroDaConta; //Deixei int pra poder usar random
-    private double saldo;
-    private Tipo tipo;
+    protected double saldo;
     private Usuario usuario;
 
     public int getNumeroDaConta() {
@@ -22,14 +19,6 @@ public class Conta {
 
     public void setSaldo(double saldo) {
         this.saldo = saldo;
-    }
-
-    public Tipo getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(Tipo tipo) {
-        this.tipo = tipo;
     }
 
     public Usuario getUsuario() {
