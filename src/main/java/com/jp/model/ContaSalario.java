@@ -2,7 +2,7 @@ package com.jp.model;
 
 public class ContaSalario extends Conta {
     private int numSaquesAtual;
-    private int numMaxSaques;
+    private int numMaxSaques = 5; //5 saques ao mês no máximo
     private Conta empregador;
 
     public int getNumSaquesAtual() {

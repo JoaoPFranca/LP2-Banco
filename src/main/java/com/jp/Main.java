@@ -210,7 +210,7 @@ public class Main {
                     }
                     Conta contaAReceber = contaController.acharContaPeloNumero(contaAReceberTransferencia, agenciaAtual);
                     if (contaQueVaiPagar != null && contaAReceber != null) {
-                        contaController.transferencia(contaQueVaiPagar, contaAReceber, valor, usuarioLogado);
+                        contaController.transferencia(contaQueVaiPagar, contaAReceber, valor, usuarioLogado, bancoAtual);
                     } else {
                         System.out.println("Alguma das contas informadas não existe. Tente novamente.");
                     }

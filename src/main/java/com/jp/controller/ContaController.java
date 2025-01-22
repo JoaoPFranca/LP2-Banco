@@ -70,10 +70,10 @@ public class ContaController {
         conta.setSaldo(conta.getSaldo() + valor);
     }
 
-    public boolean transferencia(Conta conta1, Conta conta2, double valor, Usuario usuario) {
+    public boolean transferencia(Conta conta1, Conta conta2, double valor, Usuario usuario, Banco banco) {
         //O dinheiro sai da conta1 e vai para a conta2
         if(conta2 instanceof ContaSalario) {
-            if(((ContaSalario) conta2).getEmpregador().equals(conta1)) {
+            if(!(((ContaSalario) conta2).getEmpregador().equals(conta1))) {
                 System.out.println("Sua conta ou a conta dele é restrita a depósitos de empregador.");
                 return false;
             }
@@ -83,6 +83,8 @@ public class ContaController {
             if(conta1.getSaldo() >= valor) {
                 sacar(conta1, valor, usuario);
                 conta2.setSaldo(conta2.getSaldo() + valor);
+                Transacao transacao = new Transacao(valor, conta1, conta2);
+                banco.getTransacoes().add(transacao);
                 return true;
             } else {
                 System.out.println("Saldo insuficiente!");
