@@ -1,6 +1,7 @@
 package com.jp.controller;
 
 
+import com.jp.exception.BancoException;
 import com.jp.model.*;
 
 import java.util.Random;
@@ -45,37 +46,38 @@ public class ContaController {
 
     public void sacar(Conta conta, Double valor, Usuario usuario) {
         if (conta.getUsuario() != usuario) {
-            System.out.println("Você não tem permissão para fazer isso.");
+            throw new BancoException("Você não tem permissão para fazer isso.");
         }
         if (conta.getSaldo() >= valor) {
             if(conta instanceof ContaSalario) {
                 if(((ContaSalario) conta).getNumMaxSaques() >= ((ContaSalario) conta).getNumSaquesAtual()) {
-                    System.out.println("Número máximo de saques excedido. Tente novamente mais tarde.");
-                    return;
+                    throw new BancoException("Número máximo de saques excedido. Tente novamente mais tarde.");
                 }
             }
             conta.setSaldo(conta.getSaldo() - valor);
             System.out.println("Saque feito! Saldo atual: " + conta.getSaldo());
         } else {
-            System.out.println("Saldo insuficiente!");
+            throw new BancoException("Saldo Insuficiente.");
         }
     }
 
 
     public void depositar(Conta conta, Double valor, Usuario usuario) {
         if(conta.getUsuario() != usuario) {
-            System.out.println("Você não tem permissão para fazer isso.");
-            return;
+            throw new BancoException("Você não tem permissão para fazer isso.");
         }
-        conta.setSaldo(conta.getSaldo() + valor);
+        if(conta instanceof ContaCorrente) {
+            conta.setSaldo(conta.getSaldo() + (valor * ((ContaCorrente) conta).getTaxasManutencao()));
+        } else {
+            conta.setSaldo(conta.getSaldo() + valor);
+        }
     }
 
     public boolean transferencia(Conta conta1, Conta conta2, double valor, Usuario usuario, Banco banco) {
         //O dinheiro sai da conta1 e vai para a conta2
         if(conta2 instanceof ContaSalario) {
             if(!(((ContaSalario) conta2).getEmpregador().equals(conta1))) {
-                System.out.println("Sua conta ou a conta dele é restrita a depósitos de empregador.");
-                return false;
+                throw new BancoException("Sua conta ou a conta dele é restrita a depósitos de empregador.");
             }
         }
 
@@ -87,13 +89,11 @@ public class ContaController {
                 banco.getTransacoes().add(transacao);
                 return true;
             } else {
-                System.out.println("Saldo insuficiente!");
-                return false;
+                throw new BancoException("Saldo insuficiente.");
             }
 
         }
-        System.out.println("Você não tem permissão para fazer isso.");
-        return false;
+        throw new BancoException("Você não tem permissão para fazer isso.");
     }
 
     public Conta acharContaDoUsuarioPeloNumero(long numeroConta, Usuario usuario) {

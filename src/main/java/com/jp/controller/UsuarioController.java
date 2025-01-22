@@ -1,5 +1,6 @@
 package com.jp.controller;
 
+import com.jp.exception.BancoException;
 import com.jp.model.Banco;
 import com.jp.model.Usuario;
 
@@ -10,8 +11,7 @@ public class UsuarioController {
         Usuario novoUsuario = new Usuario();
         List<Usuario> usuariosNoBanco = banco.getUsuarios();
         if(acharUsuarioNoBancoPorCPF(usuariosNoBanco, cpf) != null || acharUsuarioNoBancoPorNome(usuariosNoBanco, nome) != null) {
-            System.out.println("Já tem um usuário com esse CPF/NOME no banco. Tente novamente.");
-            return;
+            throw new BancoException("Já tem um usuário com esse CPF/NOME no banco. Tente novamente.");
         }
         novoUsuario.setNome(nome);
         novoUsuario.setIdade(idade);
