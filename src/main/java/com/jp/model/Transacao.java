@@ -15,23 +15,23 @@ public class Transacao {
         return valor;
     }
 
-    public Conta getConta1() {
-        return pagante;
-    }
-
-    public Conta getConta2() {
-        return recebedor;
-    }
-
     public void setValor(double valor) {
         this.valor = valor;
     }
 
-    public void setConta1(Conta pagante) {
+    public Conta getPagante() {
+        return pagante;
+    }
+
+    public void setPagante(Conta pagante) {
         this.pagante = pagante;
     }
 
-    public void setConta2(Conta recebedor) {
+    public Conta getRecebedor() {
+        return recebedor;
+    }
+
+    public void setRecebedor(Conta recebedor) {
         this.recebedor = recebedor;
     }
 }

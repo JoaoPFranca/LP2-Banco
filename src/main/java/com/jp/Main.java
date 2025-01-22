@@ -1,17 +1,21 @@
 package com.jp;
 
+import com.jp.controller.BancoController;
 import com.jp.controller.ContaController;
 import com.jp.controller.UsuarioController;
 import com.jp.model.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         Usuario usuarioLogado = null;
         final UsuarioController usuarioController = new UsuarioController();
         final ContaController contaController = new ContaController();
+        final BancoController bancoController = new BancoController();
         Banco bancoAtual = new Banco();
         Agencia agencia1 = new Agencia(1);
         Agencia agencia2 = new Agencia(2);
@@ -27,6 +31,7 @@ public class Main {
                 System.out.println("|                 1- Cadastro                      |");
                 System.out.println("|                 2- Login                         |");
                 System.out.println("|                 3- Sair                          |");
+                System.out.println("|                 4- Imprimir dados do banco       |");
                 System.out.println("|                                                  |");
                 System.out.println("----------------------------------------------------");
                 entrada1 = sc.nextInt();
@@ -45,7 +50,8 @@ public class Main {
                     System.out.println("Diga uma senha a ser usada para login:");
                     String entradaSenha = sc.nextLine();
                     usuarioController.cadastro(bancoAtual, entradaNome, entradaIdade, entradaCPF, entradaSenha);
-                } else if(entrada1 == 2) {
+                }
+                else if(entrada1 == 2) {
                     System.out.println("--------Banco João Pedro de França Barboza----------");
                     System.out.println("|                    Login                         |");
                     System.out.println("----------------------------------------------------");
@@ -59,8 +65,11 @@ public class Main {
                     } else {
                         System.out.println("O login falhou. Tente novamente.");
                     }
-                } else {
+                }
+                else if(entrada1 == 3) {
                     break;
+                } else {
+                    bancoController.criarArquivo(bancoAtual);
                 }
             } else {
                 System.out.println("--------Banco João Pedro de França Barboza----------");
