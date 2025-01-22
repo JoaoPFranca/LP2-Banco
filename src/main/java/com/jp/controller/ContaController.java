@@ -63,13 +63,15 @@ public class ContaController {
 
 
     public void depositar(Conta conta, Double valor, Usuario usuario) {
-        if(conta.getUsuario() != usuario) {
+        if (conta.getUsuario() != usuario) {
             throw new BancoException("Você não tem permissão para fazer isso.");
         }
-        if(conta instanceof ContaCorrente) {
+        if (conta instanceof ContaCorrente) {
             conta.setSaldo(conta.getSaldo() + (valor * ((ContaCorrente) conta).getTaxasManutencao()));
+        } else if (conta instanceof ContaPoupanca) {
+            conta.setSaldo(conta.getSaldo() + (valor * ((ContaPoupanca) conta).getRendimentoMensal()));
         } else {
-            conta.setSaldo(conta.getSaldo() + valor);
+                conta.setSaldo(conta.getSaldo() + valor);
         }
     }
 
