@@ -19,7 +19,7 @@ Adicionados três tipos de contas utilizando herança. Cada tipo possui caracter
   - Somente pode receber transferências da conta do empregador.
 
 ### ⚠️ Tratamento de Exceções
-Implementado o tratamento de erros personalizados para operações bancárias.  
+Implementado o tratamento de exceções personalizadas para operações bancárias.  
 **Implementação:** exception/BancoException.java
 
 ### 📄 Exportação de Dados
