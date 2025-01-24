@@ -7,7 +7,7 @@ import com.jp.model.Usuario;
 import java.util.List;
 
 public class UsuarioController {
-    public void cadastro(Banco banco, String nome, int idade, String cpf, String senha) {
+    public Usuario cadastro(Banco banco, String nome, int idade, String cpf, String senha) {
         Usuario novoUsuario = new Usuario();
         List<Usuario> usuariosNoBanco = banco.getUsuarios();
         if(acharUsuarioNoBancoPorCPF(usuariosNoBanco, cpf) != null || acharUsuarioNoBancoPorNome(usuariosNoBanco, nome) != null) {
@@ -18,6 +18,7 @@ public class UsuarioController {
         novoUsuario.setCpf(cpf);
         novoUsuario.setSenha(senha);
         banco.getUsuarios().add(novoUsuario);
+        return novoUsuario;
     }
 
     public Usuario login(Banco banco, String cpf, String senha) {

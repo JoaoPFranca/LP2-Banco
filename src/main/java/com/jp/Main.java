@@ -31,7 +31,8 @@ public class Main {
                 System.out.println("|                 1- Cadastro                      |");
                 System.out.println("|                 2- Login                         |");
                 System.out.println("|                 3- Sair                          |");
-                System.out.println("|                 4- Imprimir dados do banco       |");
+                System.out.println("|                 4- Exportar dados do banco       |");
+                System.out.println("|                 5- Importar dados do banco       |");
                 System.out.println("|                                                  |");
                 System.out.println("----------------------------------------------------");
                 entrada1 = sc.nextInt();
@@ -68,8 +69,11 @@ public class Main {
                 }
                 else if(entrada1 == 3) {
                     break;
+                }
+                else if(entrada1 == 4) {
+                    bancoController.exportar(bancoAtual);
                 } else {
-                    bancoController.criarArquivo(bancoAtual);
+                    bancoController.importar(bancoAtual);
                 }
             } else {
                 System.out.println("--------Banco João Pedro de França Barboza----------");
