@@ -25,6 +25,10 @@ Implementado o tratamento de exceções personalizadas para operações bancári
 ### 📄 Exportação de Dados
 Os dados do banco agora podem ser exportados no formato CSV.  
 **Implementação:** controller/BancoController.java
+
+### 📄 Importação de Dados
+Os dados do banco agora podem ser importados a partir do arquivo banco.csv.  
+**Implementação:** controller/BancoController.java
   
 
 <h2 id="observacoes">💻 Observações:</h2>
